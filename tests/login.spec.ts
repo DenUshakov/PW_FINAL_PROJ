@@ -1,13 +1,19 @@
 import { test, expect } from '@playwright/test';
+import { HomePage } from '../pages/home.page';
+import { LoginPage } from '../pages/login.page';
+import { AccountPage } from '../pages/account.page';
 
 test('Login with valid credentials', async ({ page }) => {
-  await page.goto('/auth/login');
+  const homePage = new HomePage(page);
+  const loginPage = new LoginPage(page);
+  const accountPage = new AccountPage(page);
+  
+  await homePage.goto();
+  await homePage.header.goToSignIn();
 
-  await page.getByTestId('email').fill('customer@practicesoftwaretesting.com');
-  await page.getByTestId('password').fill('welcome01');
-  await page.getByTestId('login-submit').click();
-
+  await loginPage.login('customer@practicesoftwaretesting.com', 'welcome01');
+  
   await expect(page).toHaveURL('/account');
-  await expect(page.getByTestId('page-title')).toHaveText('My account');
-  await expect(page.getByTestId('nav-menu')).toContainText('Jane Doe');
+  await expect(accountPage.pageTitle).toHaveText('My account');
+  await expect(accountPage.header.navMenu).toContainText('Jane Doe');
 });
