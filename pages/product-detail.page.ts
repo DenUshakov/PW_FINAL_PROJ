@@ -2,10 +2,10 @@ import { Locator, Page } from '@playwright/test';
 import { BasePage } from './base.page';
 
 export class ProductDetailPage extends BasePage {
-  readonly productName: Locator;
-  readonly productPrice: Locator;
-  readonly addToCartButton: Locator;
-  readonly addToFavoritesButton: Locator;
+  productName: Locator;
+  productPrice: Locator;
+  addToCartButton: Locator;
+  addToFavoritesButton: Locator;
 
   constructor(page: Page) {
     super(page);
