@@ -6,6 +6,7 @@ export class ProductDetailPage extends BasePage {
   productPrice: Locator;
   addToCartButton: Locator;
   addToFavoritesButton: Locator;
+  alertMessage: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -13,5 +14,9 @@ export class ProductDetailPage extends BasePage {
     this.productPrice = page.getByTestId('unit-price');
     this.addToCartButton = page.getByTestId('add-to-cart');
     this.addToFavoritesButton = page.getByTestId('add-to-favorites');
+    this.alertMessage = page.getByRole('alert');
+  }
+  async clickAddToCart() {
+    await this.addToCartButton.click();
   }
 }

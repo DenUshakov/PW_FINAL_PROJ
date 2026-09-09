@@ -10,7 +10,7 @@ test('Verify user can view product details', async ({ page }) => {
   await homePage.goto();
 
   // 2. Click on the product "Combination Pliers"
-  await homePage.openProduct('Combination Pliers');
+  await homePage.clickOnProduct('Combination Pliers');
 
   // Assertions
   await expect(page).toHaveURL(/\/product\//);
