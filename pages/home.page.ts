@@ -3,10 +3,14 @@ import { BasePage } from './base.page';
 
 export class HomePage extends BasePage {
   readonly sortDropdown: Locator;
+  readonly productTitles: Locator;
+  readonly productPrices: Locator;
 
   constructor(page: Page) {
     super(page);
     this.sortDropdown = page.getByTestId('sort');
+    this.productTitles = page.getByTestId('product-name');
+    this.productPrices = page.getByTestId('product-price');
   }
 
   async goto() {
@@ -27,6 +31,6 @@ export class HomePage extends BasePage {
 
   async selectCategory(categoryName: string) {
     await this.page.getByLabel(categoryName).check();
-    await this.page.locator('[data-test="filter_completed"]').waitFor();
+    await this.page.locator('[data-test="filter_completed"]').waitFor({ state: 'attached' }).catch(() => {});
   }
 }

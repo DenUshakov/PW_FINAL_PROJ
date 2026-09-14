@@ -12,8 +12,9 @@ for (const data of priceSortData) {
     await homePage.goto();
 
     await homePage.selectSort(data.sortOption);
+
     await expect(async () => {
-      const priceTexts = await page.getByTestId('product-price').allInnerTexts();
+      const priceTexts = await homePage.productPrices.allInnerTexts();
       expect(priceTexts.length).toBeGreaterThan(0);
 
       const prices = priceTexts.map((text) => Number(text.replace('$', '').trim()));
