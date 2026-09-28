@@ -31,16 +31,20 @@ export default defineConfig({
     baseURL: 'https://practicesoftwaretesting.com',
     testIdAttribute: 'data-test', 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    viewport: { width: 1280, height: 720 },
+    
     trace: process.env.CI ? 'on-first-retry' : 'retain-on-failure',
     screenshot: 'only-on-failure',
   },
 
   /* Configure projects for major browsers */
   projects: [
-    { name: 'setup',
-      testMatch: /auth\.setup\.ts/ },
-
+    { 
+      name: 'setup',
+      testMatch: /auth\.setup\.ts/,
+      use: {
+        ...devices['Desktop Chrome'],
+      },
+    },
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'],
