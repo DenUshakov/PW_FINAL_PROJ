@@ -6,7 +6,7 @@ import { BasePage } from './base.page';
 export interface BillingAddressData {
   country: string;
   postcode: string;
-  houseNumber: string; // Делаем обязательным
+  houseNumber: string;
   street: string;
   city: string;
   state: string;
@@ -24,13 +24,16 @@ export class CheckoutPage extends BasePage {
    proceedToCheckoutButton: Locator;
    proceedToBillingButton: Locator; 
    proceedToPaymentButton: Locator; 
-
+   table: Locator;
    countrySelect: Locator;
    postcodeInput: Locator;
    houseNumberInput: Locator;
    streetInput: Locator;
    cityInput: Locator;
    stateInput: Locator;
+   tableRows: Locator;
+   productTitle: Locator;
+   proceedButton: Locator;
 
    paymentMethodSelect: Locator;
    cardNumberInput: Locator;
@@ -46,7 +49,10 @@ export class CheckoutPage extends BasePage {
     this.proceedToCheckoutButton = page.getByTestId('proceed-1');
     this.proceedToBillingButton = page.getByTestId('proceed-2');
     this.proceedToPaymentButton = page.getByTestId('proceed-3');
-
+    this.table = page.locator('table');
+    this.tableRows = page.locator('tbody tr');
+    this.productTitle = page.getByTestId('product-title');
+    this.proceedButton = page.getByTestId('proceed-1');
     this.countrySelect = page.getByTestId('country');
     this.postcodeInput = page.getByTestId('postcode').or(page.getByTestId('postal_code'));
     this.houseNumberInput = page.getByTestId('house_number').or(page.getByTestId('street_number')).or(page.locator('input[formcontrolname="house_number"]'));

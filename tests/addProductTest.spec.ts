@@ -35,6 +35,7 @@ test('Verify user can add product to cart', async ({ page }) => {
 
   // Assertions for checkout page
   await expect(page).toHaveURL(/checkout/);
+  await expect(checkoutPage.table).toBeVisible();
   await expect(checkoutPage.tableRows).toHaveCount(1);
   await expect(checkoutPage.productTitle).toHaveText('Slip Joint Pliers');
   await expect(checkoutPage.proceedButton).toBeVisible();
