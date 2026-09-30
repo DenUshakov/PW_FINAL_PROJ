@@ -15,28 +15,31 @@ test('Verify successful checkout flow for logged in user', async ({ loggedInApp 
 
   await loggedInApp.cartPage.proceedToCheckout();
 
-  await expect(async () => {
-    if (!(await loggedInApp.checkoutPage.countrySelect.isVisible())) {
-      await loggedInApp.checkoutPage.proceedToBillingButton.click();
-    }
-    await expect(loggedInApp.checkoutPage.countrySelect).toBeVisible();
-  }).toPass({ timeout: 15000 });
+  // Перевірка та перехід до кроку адреси
+  if (!(await loggedInApp.checkoutPage.countrySelect.isVisible())) {
+    await loggedInApp.checkoutPage.proceedToBillingButton.click();
+  }
 
+  await expect(loggedInApp.checkoutPage.countrySelect).toBeVisible({ timeout: 15000 });
+
+  // Заповнення адреси (Клік proceedToPaymentButton відбувається ВСЕРЕДИНІ цього методу)
   await loggedInApp.checkoutPage.fillBillingAddress({
     country: 'Spain',
-    postcode: '29001',
-    houseNumber: '12', 
-    street: 'Main Street',
-    city: 'Malaga',
-    state: 'Andalusia',
+    postcode: '28001',
+    houseNumber: '10',
+    street: 'Gran Via',
+    city: 'Madrid',
+    state: 'Madrid',
   });
 
+  // Оплачуємо замовлення (fillPaymentDetails сам обробить платіж і клікне Confirm)
   await loggedInApp.checkoutPage.fillPaymentDetails({
-    method: 'credit-card',
-    cardNumber: '1111-1111-1111-1111',
-    cvv: '111',
-    cardHolder: 'Jane Doe',
+    method: 'Credit Card',
+    cardNumber: '1111-2222-3333-4444',
+    cvv: '123',
+    cardHolder: 'Denys QA',
   });
 
-  await expect(loggedInApp.checkoutPage.successAlert).toBeVisible({ timeout: 10000 });
+  // Перевірка успішного завершення
+  await expect(loggedInApp.checkoutPage.successAlert).toBeVisible();
 });
