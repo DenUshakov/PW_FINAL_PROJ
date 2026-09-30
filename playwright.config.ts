@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { defineConfig, devices } from '@playwright/test';
 
 /**
@@ -16,6 +17,7 @@ export default defineConfig({
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
@@ -29,15 +31,20 @@ export default defineConfig({
     baseURL: 'https://practicesoftwaretesting.com',
     testIdAttribute: 'data-test', 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
+    
     trace: process.env.CI ? 'on-first-retry' : 'retain-on-failure',
     screenshot: 'only-on-failure',
   },
 
   /* Configure projects for major browsers */
   projects: [
-    { name: 'setup',
-      testMatch: /auth\.setup\.ts/ },
-
+    { 
+      name: 'setup',
+      testMatch: /auth\.setup\.ts/,
+      use: {
+        ...devices['Desktop Chrome'],
+      },
+    },
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'],

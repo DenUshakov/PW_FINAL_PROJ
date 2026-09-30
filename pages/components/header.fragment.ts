@@ -28,4 +28,8 @@ export class HeaderFragment {
   async clickCart() {
     await this.cartIcon.click();
   }
+
+  async goToCart() {
+    await this.page.getByTestId('nav-cart').click();
+  }
 }

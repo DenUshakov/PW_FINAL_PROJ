@@ -13,7 +13,8 @@ test('authenticate', async ({ page }) => {
   const accountPage = new AccountPage(page);
 
   await homePage.goto();
-  await homePage.header.goToSignIn();
+  await expect(homePage.header.signInLink).toBeVisible();
+    await homePage.header.goToSignIn();
 
   await loginPage.login('customer@practicesoftwaretesting.com', 'welcome01');
 
